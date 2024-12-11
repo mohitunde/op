@@ -1,0 +1,66 @@
+import java.util.Scanner;
+
+//Abstract base class Shape
+abstract class Shape {
+ double dimension1, dimension2;  // Two double type values to store dimensions
+
+ // Method to input the dimensions of the shape
+ public void inputData(double d1, double d2) {
+     dimension1 = d1;
+     dimension2 = d2;
+ }
+
+ // Abstract method to compute the area of the shape
+ public abstract void compute_area();
+}
+
+//Derived class Triangle
+class Triangle extends Shape {
+
+ // Redefining the compute_area method to calculate the area of a triangle
+ @Override
+ public void compute_area() {
+     // Area of triangle = 0.5 * base * height
+     double area = 0.5 * dimension1 * dimension2;
+     System.out.println("Area of Triangle: " + area);
+ }
+}
+
+//Derived class Rectangle
+class Rectangle extends Shape {
+
+ // Redefining the compute_area method to calculate the area of a rectangle
+ @Override
+ public void compute_area() {
+     // Area of rectangle = length * width
+     double area = dimension1 * dimension2;
+     System.out.println("Area of Rectangle: " + area);
+ }
+}
+
+//Main class with the program
+public class Main {
+ public static void main(String[] args) {
+     Scanner sc = new Scanner(System.in);  // Create Scanner object to take input
+
+     // Create objects for Triangle and Rectangle
+     Shape triangle = new Triangle();
+     Shape rectangle = new Rectangle();
+
+     // Input and calculate area for the triangle
+     System.out.println("Enter base and height for the triangle:");
+     double base = sc.nextDouble();  // Take input for base
+     double height = sc.nextDouble();  // Take input for height
+     triangle.inputData(base, height);  // Set dimensions for the triangle
+     triangle.compute_area();  // Calculate and display the area of the triangle
+
+     // Input and calculate area for the rectangle
+     System.out.println("Enter length and width for the rectangle:");
+     double length = sc.nextDouble();  // Take input for length
+     double width = sc.nextDouble();  // Take input for width
+     rectangle.inputData(length, width);  // Set dimensions for the rectangle
+     rectangle.compute_area();  // Calculate and display the area of the rectangle
+
+     sc.close();  // Close the scanner object to free up resources
+ }
+}

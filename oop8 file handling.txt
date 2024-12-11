@@ -1,0 +1,148 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+// Student Class
+class Student implements Serializable {
+ private String studentId;
+ private String name;
+ private String rollNo;
+ private String className;
+ private double marks;
+ private String address;
+ public Student(String studentId, String name, String rollNo, String className, double
+marks, String address) {
+ this.studentId = studentId;
+ this.name = name;
+ this.rollNo = rollNo;
+ this.className = className;
+ this.marks = marks;
+ this.address = address;
+ }
+ public String getStudentId() {
+ return studentId;
+ }
+ public String getName() {
+ return name;
+ }
+ public String getRollNo() {
+ return rollNo;
+ }
+ public String getClassName() {
+ return className;
+ }
+ public double getMarks() {
+ return marks;
+ }
+ public String getAddress() {
+ return address;
+ }
+ public String toString() {
+ return "ID: " + studentId + ", Name: " + name + ", Roll No: " + rollNo +
+ ", Class: " + className + ", Marks: " + marks + ", Address: " + address;
+ }
+}
+// StudentDatabase Class
+class StudentDatabase {
+ private static final String FILE_NAME = "students.dat";
+ public void createDatabase(List<Student> students) {
+ try (ObjectOutputStream oos = new ObjectOutputStream(new
+FileOutputStream(FILE_NAME))) {
+ for (Student student : students) {
+ oos.writeObject(student);
+ }
+ System.out.println("Database created successfully.");
+ } catch (IOException e) {
+ e.printStackTrace();
+ }
+ }
+ public List<Student> displayDatabase() {
+ List<Student> students = new ArrayList<>();
+ try (ObjectInputStream ois = new ObjectInputStream(new
+FileInputStream(FILE_NAME))) {
+ while (true) {
+ Student student = (Student) ois.readObject();
+ students.add(student);
+ }
+ } catch (EOFException ignored) {
+ } catch (IOException | ClassNotFoundException e) {
+ e.printStackTrace();
+ }
+ return students;
+ }
+ public void deleteRecord(String studentId) {
+ List<Student> students = displayDatabase();
+ students.removeIf(student -> student.getStudentId().equals(studentId));
+ saveUpdatedDatabase(students);
+ System.out.println("Record deleted successfully.");
+ }
+ public void updateRecord(Student updatedStudent) {
+ List<Student> students = displayDatabase();
+ for (int i = 0; i < students.size(); i++) {
+ if (students.get(i).getStudentId().equals(updatedStudent.getStudentId())) {
+ students.set(i, updatedStudent);
+ break;
+ }
+ }
+ saveUpdatedDatabase(students);
+ System.out.println("Record updated successfully.");
+ }
+ public Student searchRecord(String studentId) {
+ List<Student> students = displayDatabase();
+ for (Student student : students) {
+ if (student.getStudentId().equals(studentId)) {
+ return student;
+ }
+ }
+ return null;
+ }
+ private void saveUpdatedDatabase(List<Student> students) {
+ try (ObjectOutputStream oos = new ObjectOutputStream(new
+FileOutputStream(FILE_NAME))) {
+ for (Student student : students) {
+ oos.writeObject(student);
+ }
+ } catch (IOException e) {
+ e.printStackTrace();
+ }
+ }
+}
+// Main Class
+public class Main {
+ public static void main(String[] args) {
+ StudentDatabase db = new StudentDatabase();
+ Scanner scanner = new Scanner(System.in);
+ // Create sample data
+ List<Student> students = new ArrayList<>();
+ students.add(new Student("1", "Alice", "101", "10th", 95.5, "123 Main St"));
+ students.add(new Student("2", "Bob", "102", "10th", 88.0, "456 Oak St"));
+ students.add(new Student("3", "Charlie", "103", "10th", 92.5, "789 Pine St"));
+
+ // Create database
+ db.createDatabase(students);
+ // Display database
+ System.out.println("Displaying Database:");
+ List<Student> studentList = db.displayDatabase();
+ studentList.forEach(System.out::println);
+ // Update a record
+ System.out.println("\nUpdating Bob's record...");
+ db.updateRecord(new Student("2", "Bob", "102", "10th", 90.0, "456 Oak St Updated"));
+ // Search for a record
+ System.out.println("\nSearching for Alice's record...");
+ Student searchResult = db.searchRecord("1");
+ if (searchResult != null) {
+ System.out.println("Found: " + searchResult);
+ } else {
+ System.out.println("Record not found.");
+ }
+ // Delete a record
+ System.out.println("\nDeleting Charlie's record...");
+ db.deleteRecord("3");
+ // Display database again
+ System.out.println("Displaying Database after deletion:");
+ studentList = db.displayDatabase();
+ studentList.forEach(System.out::println);
+
+ scanner.close();
+ }
+}

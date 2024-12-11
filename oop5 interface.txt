@@ -1,0 +1,86 @@
+//Interface defining common vehicle functionalities
+interface Vehicle {
+ void gearChange();  // Method to change gears
+ void speedUp();     // Method to speed up
+ void applyBrakes(); // Method to apply brakes
+}
+
+//Bicycle class implementing the Vehicle interface
+class Bicycle implements Vehicle {
+ @Override
+ public void gearChange() {
+     System.out.println("Bicycle: Changing gears to a higher level.");
+ }
+
+ @Override
+ public void speedUp() {
+     System.out.println("Bicycle: Pedaling faster to speed up.");
+ }
+
+ @Override
+ public void applyBrakes() {
+     System.out.println("Bicycle: Applying brakes and slowing down.");
+ }
+}
+
+//Bike class implementing the Vehicle interface
+class Bike implements Vehicle {
+ @Override
+ public void gearChange() {
+     System.out.println("Bike: Shifting gears for more speed.");
+ }
+
+ @Override
+ public void speedUp() {
+     System.out.println("Bike: Accelerating the engine to speed up.");
+ }
+
+ @Override
+ public void applyBrakes() {
+     System.out.println("Bike: Using brakes to slow down the bike.");
+ }
+}
+
+//Car class implementing the Vehicle interface
+class Car implements Vehicle {
+ @Override
+ public void gearChange() {
+     System.out.println("Car: Changing gears with the gear shift.");
+ }
+
+ @Override
+ public void speedUp() {
+     System.out.println("Car: Pressing the accelerator to speed up.");
+ }
+
+ @Override
+ public void applyBrakes() {
+     System.out.println("Car: Applying the brake pedal to slow down.");
+ }
+}
+
+//Main class to test the implementation
+public class Main{
+ public static void main(String[] args) {
+     // Create objects of different vehicles
+     Vehicle bicycle = new Bicycle();
+     Vehicle bike = new Bike();
+     Vehicle car = new Car();
+
+     // Test the functionalities of each vehicle
+     System.out.println("Bicycle Functionality:");
+     bicycle.gearChange();
+     bicycle.speedUp();
+     bicycle.applyBrakes();
+
+     System.out.println("\nBike Functionality:");
+     bike.gearChange();
+     bike.speedUp();
+     bike.applyBrakes();
+
+     System.out.println("\nCar Functionality:");
+     car.gearChange();
+     car.speedUp();
+     car.applyBrakes();
+ }
+}

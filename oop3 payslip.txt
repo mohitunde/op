@@ -1,0 +1,76 @@
+//Base class Employee
+class Employee{
+  String empname;
+  String empid;
+  String address;
+  String mailid;
+  String mobileno;
+  double basicpay;
+  
+  //Constructor
+  public Employee(String empname,String empid,String address,String mailid,String mobileno,double basicpay){
+      this.empname=empname;
+      this.empid=empid;
+      this.address=address;
+      this.mailid=mailid;
+      this.mobileno=mobileno;
+      this.basicpay=basicpay;
+  }
+  //To calculate gross salary
+  public double calculateGrossSalary(){
+      double da=0.97 * basicpay;
+      double hra=0.10 * basicpay;
+      double pf=0.12 * basicpay;
+      double staffclubfund=0.001 * basicpay;
+      return basicpay + da + hra - pf - staffclubfund;
+  }
+  //to generate payslip
+  public void generatePaySlip(){
+      double grosssalary=calculateGrossSalary();
+       System.out.println("Pay Slip for " + empname + " (ID: " + empid + ")");
+      System.out.println("Basic Pay: " + basicpay);
+      System.out.println("Gross Salary: " + grosssalary);
+      System.out.println("-------------------------------------------------");
+  }
+}
+class Programmer extends Employee {
+  public Programmer(String empName, String empId, String address, String mailId, String mobileNo, double basicPay) {
+      super(empName, empId, address, mailId, mobileNo, basicPay);
+  }
+}
+
+//Derived class for Team Lead
+class TeamLead extends Employee {
+  public TeamLead(String empName, String empId, String address, String mailId, String mobileNo, double basicPay) {
+      super(empName, empId, address, mailId, mobileNo, basicPay);
+  }
+}
+
+//Derived class for Assistant Project Manager
+class AssistantProjectManager extends Employee {
+  public AssistantProjectManager(String empName, String empId, String address, String mailId, String mobileNo, double basicPay) {
+      super(empName, empId, address, mailId, mobileNo, basicPay);
+  }
+}
+
+//Derived class for Project Manager
+class ProjectManager extends Employee {
+  public ProjectManager(String empName, String empId, String address, String mailId, String mobileNo, double basicPay) {
+      super(empName, empId, address, mailId, mobileNo, basicPay);
+  }
+}
+public class Main{
+  public static void main(String[] args){
+      // Create instances of each employee type
+      Programmer programmer = new Programmer("Alice", "P001", "123 Main St", "alice@example.com", "1234567890", 50000);
+      TeamLead teamLead = new TeamLead("Bob", "TL001", "456 Elm St", "bob@example.com", "0987654321", 70000);
+      AssistantProjectManager apm = new AssistantProjectManager("Charlie", "APM001", "789 Oak St", "charlie@example.com", "1122334455", 60000);
+      ProjectManager pm = new ProjectManager("Diana", "PM001", "321 Pine St", "diana@example.com", "5566778899", 80000);
+
+      // Generate pay slips
+      programmer.generatePaySlip();
+      teamLead.generatePaySlip();
+      apm.generatePaySlip();
+      pm.generatePaySlip();
+  }
+}

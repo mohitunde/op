@@ -1,0 +1,81 @@
+//Base class
+class Publication {
+ String title;
+ double price;
+ int copies;
+
+ // Constructor
+ public Publication(String title, double price, int copies) {
+     this.title = title;
+     this.price = price;
+     this.copies = copies;
+ }
+ // Method to sell copies
+ public void saleCopy(int quantity) {
+     if (quantity <= copies) {
+         copies -= quantity;
+         System.out.println("Sold " + quantity + " copies of " + title);
+     } else {
+         System.out.println("Not enough copies available for " + title);
+     }
+ }
+}
+
+//Book class
+class Book extends Publication {
+ String author;
+
+ // Constructor
+ public Book(String title, double price, int copies, String author) {
+     super(title, price, copies);
+     this.author = author;
+ }
+
+ // Method to order copies
+ public void orderCopies(int quantity) {
+     copies += quantity;
+     System.out.println("Ordered " + quantity + " copies of " + title);
+ }
+}
+
+//Magazine class
+class Magazine extends Publication {
+ String currentIssue;
+
+ // Constructor
+ public Magazine(String title, double price, int copies, String currentIssue) {
+     super(title, price, copies);
+     this.currentIssue = currentIssue;
+ }
+
+ // Method to order quantity
+ public void orderQty(int quantity) {
+     copies += quantity;
+     System.out.println("Ordered " + quantity + " copies of " + title);
+ }
+
+ // Method to receive issue
+ public void receiveIssue(String issue) {
+     currentIssue = issue;
+     System.out.println("Received issue: " + issue + " for " + title);
+ }
+}
+
+//Main class
+public class practice2 {
+ public static void main(String[] args) {
+     // Create instances of Book and Magazine
+     Book book1 = new Book("Java Programming", 29.99, 100, "John Doe");
+     Magazine mag1 = new Magazine("Tech Today", 5.99, 50, "March 2023");
+
+     // Order copies
+     book1.orderCopies(20);
+     mag1.orderQty(30);
+
+     // Sell copies
+     book1.saleCopy(10);
+     mag1.saleCopy(5);
+
+     
+ }
+}

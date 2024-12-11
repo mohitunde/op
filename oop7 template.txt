@@ -1,0 +1,93 @@
+import java.util.*;
+
+interface Condition<T>
+{
+boolean test(T element);
+}
+
+public class Main
+{
+public static <T> int countIf(List<T> collection, Condition<T> condition)
+{
+int count = 0;
+for (T element : collection)
+{
+if (condition.test(element))
+{
+count++;
+}
+}
+return count;
+}
+
+public static boolean isPrime(int n)
+{
+if (n < 2)
+{
+return false;
+}
+for (int i = 2; i < n; i++)
+{
+if (n % i == 0)
+{
+return false;
+}
+}
+return true;
+}
+
+public static boolean isPalindrome(int n)
+{
+int c,rev=0,rem;
+c=n;
+if(n != 0)
+{
+rem=n%10;
+rev=rev*10+rem;
+n=n/10;
+}
+return c == rev;
+}
+
+public static void main(String[] args)
+{
+List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 22, 121, 133);
+
+Condition<Integer> evenCondition = new Condition<>()
+{
+public boolean test(Integer n)
+{
+return n % 2 == 0;
+}
+};
+
+Condition<Integer> oddCondition = new Condition<>()
+{
+public boolean test(Integer n)
+{
+return n % 2 != 0;
+}
+};
+
+Condition<Integer> primeCondition = new Condition<>()
+{
+public boolean test(Integer n)
+{
+return isPrime(n);
+}
+};
+
+Condition<Integer> palindromeCondition = new Condition<>()
+{
+public boolean test(Integer element)
+{
+return isPalindrome(element);
+}
+};
+
+System.out.println("Even numbers count: " + countIf(numbers, evenCondition));
+System.out.println("Odd numbers count: " + countIf(numbers, oddCondition));
+System.out.println("Prime numbers count: " + countIf(numbers, primeCondition));
+System.out.println("Palindrome numbers count: " + countIf(numbers, palindromeCondition));
+}
+}
